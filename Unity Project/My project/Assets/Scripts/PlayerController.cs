@@ -17,7 +17,10 @@ public class PlayerController : MonoBehaviour
     float horizontal;
     Rigidbody2D playerRigid;
     Animator animator;
+    [SerializeField] Transform spawnPoint;
+    [SerializeField] Transform player;
     
+
     void Start()
     {
         playerRigid = GetComponent<Rigidbody2D>();
@@ -36,11 +39,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             Jump();
-        }
-
-        if (Input.GetButtonDown("Fire2"))
-        {
-            KickAttack();
         }
         
     }
@@ -87,8 +85,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void KickAttack()
+    public void PlayerDeath()
     {
-        animator.SetTrigger("KickAttack");
+        player.transform.position = spawnPoint.transform.position;
     }
 }
