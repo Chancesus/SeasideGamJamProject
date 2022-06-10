@@ -16,11 +16,13 @@ public class PlayerController : MonoBehaviour
 
     float horizontal;
     Rigidbody2D playerRigid;
+    Animator animator;
     
     void Start()
     {
         playerRigid = GetComponent<Rigidbody2D>();
         playerSprite = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
    
@@ -29,10 +31,16 @@ public class PlayerController : MonoBehaviour
         horizontal = Input.GetAxis("Horizontal");
         FlipSprite();
         IsGrounded();
+        Walking();
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             Jump();
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            KickAttack();
         }
         
     }
@@ -65,5 +73,22 @@ public class PlayerController : MonoBehaviour
         {
             playerSprite.flipX = false;
         }
+    }
+
+    private void Walking()
+    {
+        if (playerRigid.velocity.x != 0)
+        {
+            animator.SetBool("Walking", true);
+        }
+        else
+        {
+            animator.SetBool("Walking", false);
+        }
+    }
+
+    private void KickAttack()
+    {
+        animator.SetTrigger("KickAttack");
     }
 }
